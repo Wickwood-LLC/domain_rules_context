@@ -1,0 +1,8 @@
+name = Domain Rules Context
+description = Provides rules integration for domain access to switch active domain during rules execution.
+core = 7.x
+
+dependencies[] = domain
+dependencies[] = rules
+
+files[] = domain_rules_context.rules.inc
