@@ -152,7 +152,7 @@ function domain_rules_context_rules_data_info() {
       'ui class' => 'DomainRulesDataUI',
       'property info' => array(
         'domain_id' => array(
-          'type' => 'int',
+          'type' => 'domain_id',
           'label' => t('Domain Id'),
           'getter callback' => 'entity_property_verbatim_get',
           'setter callback' => 'entity_property_verbatim_set',
@@ -217,6 +217,37 @@ function domain_rules_context_rules_data_info() {
 function domain_rules_context_rules_action_info() {
   $items = array();
 
+  $items['domain_rules_context_load_domain'] = array(
+    'label' => t('Load domain'),
+    'parameter' => array(
+      'domain_id' => array(
+        'type' => 'domain_id',
+        'label' => t('Domain'),
+        'description' => 'The domain ID. Optional, but either of domain ID or domain name must be present',
+        'optional' => TRUE,
+      ),
+      'subdomain' => array(
+        'type' => 'text',
+        'label' => t('Domain'),
+        'description' => 'Domain name',
+        'optional' => TRUE,
+      ),
+      'reset' => array(
+        'type' => 'boolean',
+        'label' => t('Reset'),
+        'description' => 'A boolean flag to clear the static variable if necessary',
+        'default value' => FALSE,
+      ),
+    ),
+    'provides' => array(
+      'domain' => array(
+        'type' => 'domain',
+        'label' => t('Domain'),
+      ),
+    ),
+    'group' => t('Domain Rules Context'),
+  );
+
   $items['domain_rules_context_set_domain'] = array(
     'label' => t('Set domain'),
     'parameter' => array(
@@ -229,7 +260,7 @@ function domain_rules_context_rules_action_info() {
       ),
       'bootstrap' => array(
         'type' => 'boolean',
-        'label' => t('Bootstarp'),
+        'label' => t('Bootstrap'),
         'description' => 'Whether to run domain bootstrap load. Default FALSE.',
         'default value' => FALSE,
       ),
@@ -242,7 +273,7 @@ function domain_rules_context_rules_action_info() {
     'parameter' => array(
       'bootstrap' => array(
         'type' => 'boolean',
-        'label' => t('Bootstarp'),
+        'label' => t('Bootstrap'),
         'description' => 'Whether to run domain bootstrap load. Default FALSE.',
         'default value' => FALSE,
       ),
@@ -267,6 +298,12 @@ function domain_rules_context_domains_options_list() {
   }
 
   return $options_list;
+}
+
+function domain_rules_context_load_domain($domain_id, $subdomain, $reset) {
+  return array(
+    'domain' => domain_lookup($domain_id, $subdomain, $reset),
+  );
 }
 
 function domain_rules_context_set_domain($domain_id, $bootstrap) {
