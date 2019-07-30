@@ -248,12 +248,12 @@ function domain_rules_context_rules_action_info() {
     'group' => t('Domain Rules Context'),
   );
 
-  $items['domain_rules_context_get_current_domain'] = array(
-    'label' => t('Get current domain'),
+  $items['domain_rules_context_get_current_domain_id'] = array(
+    'label' => t('Get current domain ID'),
     'provides' => array(
-      'domain' => array(
-        'type' => 'domain',
-        'label' => t('Domain'),
+      'domain_id' => array(
+        'type' => 'domain_id',
+        'label' => t('Domain ID'),
       ),
     ),
     'group' => t('Domain Rules Context'),
@@ -317,9 +317,14 @@ function domain_rules_context_load_domain($domain_id, $subdomain, $reset) {
   );
 }
 
-function domain_rules_context_get_current_domain() {
+function domain_rules_context_get_current_domain_id() {
+  $domain_id = NULL;
+  $domain = domain_get_domain();
+  if ($domain) {
+    $domain_id = $domain['domain_id'];
+  }
   return array(
-    'domain' => domain_get_domain(),
+    'domain_id' => $domain_id,
   );
 }
 
