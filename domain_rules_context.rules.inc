@@ -248,6 +248,17 @@ function domain_rules_context_rules_action_info() {
     'group' => t('Domain Rules Context'),
   );
 
+  $items['domain_rules_context_get_current_domain'] = array(
+    'label' => t('Get current domain'),
+    'provides' => array(
+      'domain' => array(
+        'type' => 'domain',
+        'label' => t('Domain'),
+      ),
+    ),
+    'group' => t('Domain Rules Context'),
+  );
+
   $items['domain_rules_context_set_domain'] = array(
     'label' => t('Set domain'),
     'parameter' => array(
@@ -303,6 +314,12 @@ function domain_rules_context_domains_options_list() {
 function domain_rules_context_load_domain($domain_id, $subdomain, $reset) {
   return array(
     'domain' => domain_lookup($domain_id, $subdomain, $reset),
+  );
+}
+
+function domain_rules_context_get_current_domain() {
+  return array(
+    'domain' => domain_get_domain(),
   );
 }
 
